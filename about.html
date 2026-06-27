@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Hotel Haven</title>
+  <meta name="description" content="Discover the story of Hotel Haven in Port Blair. Learn about our location, proximity to key landmarks, and our commitment to island hospitality.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS Style -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo" id="headerLogo">
+        <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+        <span>Hotel Haven</span>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link" id="linkHome">Home</a>
+        <a href="rooms.html" class="nav-link" id="linkRooms">Rooms & Suites</a>
+        <a href="about.html" class="nav-link active" id="linkAbout">About</a>
+        <a href="facilities.html" class="nav-link" id="linkFacilities">Facilities</a>
+        <a href="contact.html" class="nav-link" id="linkContact">Contact</a>
+        <a href="contact.html" class="btn btn-accent" id="navBookBtn">Book Now</a>
+      </nav>
+      <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header" style="background-image: url('assets/Semi%20Deluxe%20(Double%20BED)%20AC/2.jpeg');">
+    <div class="page-header-content container">
+      <h1>About Hotel Haven</h1>
+      <p>A peaceful, welcoming home away from home in Sri Vijaya Puram (Port Blair), Andaman.</p>
+    </div>
+  </section>
+
+  <!-- Sticky booking bar container for scrolled states -->
+  <div style="height: 1px; background: transparent;"></div>
+
+  <!-- Story & Location Highlights Section -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="welcome-grid">
+        <div class="welcome-text">
+          <span class="eyebrow">Our Story & Ethos</span>
+          <h2>Genuine Island Hospitality</h2>
+          <p>Hotel Haven was established with a singular mission: to provide comfortable, dependable, and warm accommodations for travelers exploring the beautiful Andaman and Nicobar Islands. We combine budget-friendly rates with clean, fully furnished AC rooms and personalized attention.</p>
+          <p>Situated in the peaceful Dolly Gunj area on Govt. Polytechnic Road, we offer guests a serene retreat away from the busy city streets, while keeping you exceptionally close to Veer Savarkar International Airport (only 2.5 km away) and the central ferry jetty (Haddo Harbour) for excursions to Havelock (Swaraj Dweep) and Neil (Shaheed Dweep) islands.</p>
+          <p>Our travel desk is managed by local experts who take the stress out of your holiday planning, from scheduling Cellular Jail entry tickets and arranging boat trips to booking two-wheeler rentals for self-guided island exploration.</p>
+        </div>
+        <div class="location-info" style="background-color: var(--color-surface); padding: var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+          <span class="eyebrow">Proximity & Landmarks</span>
+          <h3>Central Location Links</h3>
+          <p>Our location makes commuting effortless, saving you valuable transit time during your holiday:</p>
+          
+          <div class="landmark-list">
+            <div class="landmark-item">
+              <span><i class="fas fa-plane"></i> Port Blair Airport</span>
+              <span class="landmark-dist">2.5 km</span>
+            </div>
+            <div class="landmark-item">
+              <span><i class="fas fa-ship"></i> Haddo Harbour (Jetty)</span>
+              <span class="landmark-dist">4.0 km</span>
+            </div>
+            <div class="landmark-item">
+              <span><i class="fas fa-building"></i> Cellular Jail</span>
+              <span class="landmark-dist">4.0 km</span>
+            </div>
+            <div class="landmark-item">
+              <span><i class="fas fa-city"></i> Main City / Markets</span>
+              <span class="landmark-dist">3.5 km</span>
+            </div>
+            <div class="landmark-item">
+              <span><i class="fas fa-landmark"></i> Anthropological Museum</span>
+              <span class="landmark-dist">3.5 km</span>
+            </div>
+            <div class="landmark-item">
+              <span><i class="fas fa-clinic-medical"></i> General & Multi-Specialty Clinics</span>
+              <span class="landmark-dist">Within 2.0 km</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Strip Section -->
+  <section class="section-padding bg-overlay">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Visual Tour</span>
+        <h2>A Glimpse of Haven</h2>
+        <p>Explore our clean interiors and room spaces. Click any image to view in fullscreen.</p>
+      </div>
+
+      <div class="about-photo-grid">
+        <div class="about-photo-item">
+          <img src="assets/Standard(%20Double%20BED)%20AC/3.jpeg" alt="Standard room space">
+        </div>
+        <div class="about-photo-item">
+          <img src="assets/Semi%20Deluxe%20(Double%20BED)%20AC/2.jpeg" alt="Semi Deluxe wooden details">
+        </div>
+        <div class="about-photo-item">
+          <img src="assets/Deluxe%20(Double%20BED)%20AC/4.JPG" alt="Deluxe spacious design">
+        </div>
+        <div class="about-photo-item">
+          <img src="assets/Family%20Deluxe(%20Four%20BED)%20AC/3.jpeg" alt="Family room beds layout">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Sticky Booking Bar -->
+  <div class="booking-bar" style="margin: var(--spacing-xl) auto; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+    <form class="booking-form" action="#" method="GET">
+      <div class="booking-field">
+        <label for="checkin">Check-In</label>
+        <input type="date" id="checkin" name="checkin" required>
+      </div>
+      <div class="booking-field">
+        <label for="checkout">Check-Out</label>
+        <input type="date" id="checkout" name="checkout" required>
+      </div>
+      <div class="booking-field">
+        <label for="guests">Guests</label>
+        <select id="guests" name="guests">
+          <option value="1">1 Guest</option>
+          <option value="2" selected>2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5+ Guests</option>
+        </select>
+      </div>
+      <div class="booking-field">
+        <label for="room">Room Type</label>
+        <select id="room" name="room">
+          <option value="standard">Standard Double AC</option>
+          <option value="semi-deluxe">Semi Deluxe Double AC</option>
+          <option value="deluxe">Deluxe Double AC</option>
+          <option value="family-semi-deluxe">Family Semi Deluxe AC</option>
+          <option value="family-deluxe">Family Deluxe AC</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-accent">Check Availability</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Logo & Desc -->
+        <div class="footer-col">
+          <a href="index.html" class="footer-logo">
+            <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+          </a>
+          <p class="footer-desc">Providing comfort, warmth, and reliable island hospitality in Port Blair. A home away from home in the Andamans.</p>
+        </div>
+        
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="rooms.html">Rooms & Suites</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="facilities.html">Facilities & Services</a></li>
+            <li><a href="contact.html">Contact & Directions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact Info -->
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Govt. Polytechnic Road, Dolly Gunj, Sri Vijaya Puram, PIN 744103</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <span>8900911010</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fab fa-whatsapp"></i>
+              <span>9434270555</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>havenandamanreservation@gmail.com</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Socials -->
+        <div class="footer-col">
+          <h3>Follow Us</h3>
+          <div class="footer-socials">
+            <a href="https://wa.me/919434270555" class="social-icon" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom copyright -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Hotel Haven. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global JS Script -->
+  <script src="script.js"></script>
+</body>
+</html>

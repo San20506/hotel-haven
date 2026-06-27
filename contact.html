@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Hotel Haven</title>
+  <meta name="description" content="Get in touch with Hotel Haven in Port Blair. Find our address, call/WhatsApp numbers, location map, and submit your reservation enquiry.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS Style -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo" id="headerLogo">
+        <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+        <span>Hotel Haven</span>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link" id="linkHome">Home</a>
+        <a href="rooms.html" class="nav-link" id="linkRooms">Rooms & Suites</a>
+        <a href="about.html" class="nav-link" id="linkAbout">About</a>
+        <a href="facilities.html" class="nav-link" id="linkFacilities">Facilities</a>
+        <a href="contact.html" class="nav-link active" id="linkContact">Contact</a>
+        <a href="contact.html" class="btn btn-accent" id="navBookBtn">Book Now</a>
+      </nav>
+      <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header" style="background-image: url('assets/Standard(%20Double%20BED)%20AC/2.jpeg');">
+    <div class="page-header-content container">
+      <h1>Contact Us</h1>
+      <p>Reach out to plan your stay or request custom packages. We are here to assist.</p>
+    </div>
+  </section>
+
+  <!-- Sticky booking bar container for scrolled states -->
+  <div style="height: 1px; background: transparent;"></div>
+
+  <!-- Contact Form & Info Grid -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="contact-grid">
+        
+        <!-- Left: Form Card -->
+        <div class="contact-form-card">
+          <span class="eyebrow">Reservation Enquiry</span>
+          <h2 style="margin-bottom: var(--spacing-md);">Send Us a Message</h2>
+          
+          <form id="contactForm" action="#" method="POST">
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required placeholder="e.g. John Doe">
+              </div>
+              <div class="form-field">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="e.g. john@example.com">
+              </div>
+              <div class="form-field">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required placeholder="e.g. 9876543210">
+              </div>
+              <div class="form-field">
+                <label for="roomType">Interested Room</label>
+                <select id="roomType" name="roomType">
+                  <option value="standard">Standard Double AC</option>
+                  <option value="semi-deluxe">Semi Deluxe Double AC</option>
+                  <option value="deluxe">Deluxe Double AC</option>
+                  <option value="family-semi-deluxe">Family Semi Deluxe AC</option>
+                  <option value="family-deluxe">Family Deluxe AC</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="checkin">Check-In Date</label>
+                <input type="date" id="checkin" name="checkin">
+              </div>
+              <div class="form-field">
+                <label for="checkout">Check-Out Date</label>
+                <input type="date" id="checkout" name="checkout">
+              </div>
+              <div class="form-field form-span-2">
+                <label for="guests">Number of Guests</label>
+                <select id="guests" name="guests" aria-label="Guests Count">
+                  <option value="1">1 Guest</option>
+                  <option value="2" selected>2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                  <option value="5">5+ Guests</option>
+                </select>
+              </div>
+              <div class="form-field form-span-2">
+                <label for="message">Your Message / Special Requests</label>
+                <textarea id="message" name="message" placeholder="Details about flight timings, extra mattress, travel packages, etc."></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-accent">Send Enquiry</button>
+          </form>
+        </div>
+
+        <!-- Right: Contact Details -->
+        <div class="contact-details-bar">
+          <span class="eyebrow">Connect With Us</span>
+          <h2 style="margin-bottom: var(--spacing-md);">Direct Contacts</h2>
+          
+          <!-- Card 1: Address -->
+          <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-card-text">
+              <h3>Hotel Address</h3>
+              <p>Govt. Polytechnic Road, Dolly Gunj,<br>Sri Vijaya Puram (Port Blair),<br>Andaman and Nicobar Islands, PIN 744103</p>
+              <a href="https://maps.app.goo.gl/7pmNBSPZEx52riRB8?g_st=ac" target="_blank" class="primary-color" style="font-weight: 600; margin-top: 4px; display: inline-block;"><i class="fas fa-directions"></i> Get Directions</a>
+            </div>
+          </div>
+
+          <!-- Card 2: Phone -->
+          <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="contact-card-text">
+              <h3>Phone Numbers</h3>
+              <p>Call Reservations: <a href="tel:8900911010" class="primary-color">8900911010</a></p>
+              <p>Reception / Inquiries: <a href="tel:9434270555" class="primary-color">9434270555</a></p>
+            </div>
+          </div>
+
+          <!-- Card 3: WhatsApp -->
+          <div class="contact-card">
+            <div class="contact-card-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-card-text">
+              <h3>WhatsApp Chat</h3>
+              <p>Send a direct enquiry via WhatsApp:</p>
+              <a href="https://wa.me/919434270555" target="_blank" class="accent-color" style="font-weight: 700;">Click to Chat (+91 9434270555)</a>
+            </div>
+          </div>
+
+          <!-- Card 4: Email -->
+          <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-card-text">
+              <h3>Email Address</h3>
+              <p>Send your queries to:</p>
+              <a href="mailto:havenandamanreservation@gmail.com" class="primary-color">havenandamanreservation@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Full Width Map Embed -->
+  <section class="map-section" style="padding-top: 0; padding-bottom: 0;">
+    <div class="map-container" style="height: 450px; border-radius: 0; border-left: none; border-right: none;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3907.568444558231!2d92.7169123!3d11.6473187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x308895cde1303175%3A0xb597a41bd75b8efc!2sHOTEL+HAVEN!5e0!3m2!1sen!2sin!4v1719293112345!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Logo & Desc -->
+        <div class="footer-col">
+          <a href="index.html" class="footer-logo">
+            <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+          </a>
+          <p class="footer-desc">Providing comfort, warmth, and reliable island hospitality in Port Blair. A home away from home in the Andamans.</p>
+        </div>
+        
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="rooms.html">Rooms & Suites</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="facilities.html">Facilities & Services</a></li>
+            <li><a href="contact.html">Contact & Directions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact Info -->
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Govt. Polytechnic Road, Dolly Gunj, Sri Vijaya Puram, PIN 744103</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <span>8900911010</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fab fa-whatsapp"></i>
+              <span>9434270555</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>havenandamanreservation@gmail.com</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Socials -->
+        <div class="footer-col">
+          <h3>Follow Us</h3>
+          <div class="footer-socials">
+            <a href="https://wa.me/919434270555" class="social-icon" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom copyright -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Hotel Haven. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global JS Script -->
+  <script src="script.js"></script>
+</body>
+</html>

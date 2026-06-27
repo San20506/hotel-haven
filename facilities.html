@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facilities & Services — Hotel Haven</title>
+  <meta name="description" content="Explore the full range of amenities and services offered at Hotel Haven, Port Blair. Multi-cuisine dining, WiFi, vehicle rentals, and customized tours.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS Style -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo" id="headerLogo">
+        <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+        <span>Hotel Haven</span>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link" id="linkHome">Home</a>
+        <a href="rooms.html" class="nav-link" id="linkRooms">Rooms & Suites</a>
+        <a href="about.html" class="nav-link" id="linkAbout">About</a>
+        <a href="facilities.html" class="nav-link active" id="linkFacilities">Facilities</a>
+        <a href="contact.html" class="nav-link" id="linkContact">Contact</a>
+        <a href="contact.html" class="btn btn-accent" id="navBookBtn">Book Now</a>
+      </nav>
+      <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header" style="background-image: url('assets/Family%20Deluxe(%20Four%20BED)%20AC/1.jpeg');">
+    <div class="page-header-content container">
+      <h1>Facilities & Services</h1>
+      <p>Meticulously structured features and assistance designed for your maximum comfort.</p>
+    </div>
+  </section>
+
+  <!-- Sticky booking bar container for scrolled states -->
+  <div style="height: 1px; background: transparent;"></div>
+
+  <!-- Facilities Detailed Grid -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Hotel Amenities</span>
+        <h2>Designed for a Carefree Island Stay</h2>
+        <p>From essential in-room conveniences to local logistics, we have every detail covered for your Port Blair stay.</p>
+      </div>
+
+      <div class="amenities-grid">
+        <!-- 1. Restaurant -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-utensils"></i></div>
+          <h3>Multi-Cuisine Restaurant</h3>
+          <p>Savor delicious Indian, Chinese, and local continental dishes served fresh at our on-site dining space.</p>
+        </div>
+
+        <!-- 2. Free WiFi -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-wifi"></i></div>
+          <h3>Free High-Speed WiFi</h3>
+          <p>Uninterrupted wireless internet connectivity available across all rooms and public spaces for our guests.</p>
+        </div>
+
+        <!-- 3. Intercom -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+          <h3>Intercom System</h3>
+          <p>Direct communication dial-lines between all rooms and the 24-hour reception counter for rapid assistance.</p>
+        </div>
+
+        <!-- 4. 24hrs Water -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-tint"></i></div>
+          <h3>24-Hour Water Supply</h3>
+          <p>Continuous running hot and cold water supply provided in all attached bathroom facilities throughout your stay.</p>
+        </div>
+
+        <!-- 5. Geyser -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-bath"></i></div>
+          <h3>Dedicated In-room Geysers</h3>
+          <p>Independent water-heating geysers installed inside every bathroom layout for individual guest control.</p>
+        </div>
+
+        <!-- 6. Laundry -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-tshirt"></i></div>
+          <h3>On-Call Laundry Service</h3>
+          <p>Convenient, fast turnaround laundry and dry-cleaning services available upon request through front desk.</p>
+        </div>
+
+        <!-- 7. Two-wheeler Rental -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-motorcycle"></i></div>
+          <h3>Two-Wheeler Rental</h3>
+          <p>Rent well-maintained scooters and motorbikes on-site for custom sightseeing around Port Blair.</p>
+        </div>
+
+        <!-- 8. Airport Pickup -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-shuttle-van"></i></div>
+          <h3>Airport Pickup & Drop</h3>
+          <p>Hassle-free chargeable airport pick-up and drop transfers in private vehicles. Call reservations to arrange.</p>
+        </div>
+
+        <!-- 9. Package Tours -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper"><i class="fas fa-map-marked-alt"></i></div>
+          <h3>Custom Package Tours</h3>
+          <p>Full local tour organizing, including boat ticket bookings for Ross Island, North Bay, and Cellular Jail guides.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Sticky Booking Bar -->
+  <div class="booking-bar" style="margin: 0 auto var(--spacing-xl) auto; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+    <form class="booking-form" action="#" method="GET">
+      <div class="booking-field">
+        <label for="checkin">Check-In</label>
+        <input type="date" id="checkin" name="checkin" required>
+      </div>
+      <div class="booking-field">
+        <label for="checkout">Check-Out</label>
+        <input type="date" id="checkout" name="checkout" required>
+      </div>
+      <div class="booking-field">
+        <label for="guests">Guests</label>
+        <select id="guests" name="guests">
+          <option value="1">1 Guest</option>
+          <option value="2" selected>2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5+ Guests</option>
+        </select>
+      </div>
+      <div class="booking-field">
+        <label for="room">Room Type</label>
+        <select id="room" name="room">
+          <option value="standard">Standard Double AC</option>
+          <option value="semi-deluxe">Semi Deluxe Double AC</option>
+          <option value="deluxe">Deluxe Double AC</option>
+          <option value="family-semi-deluxe">Family Semi Deluxe AC</option>
+          <option value="family-deluxe">Family Deluxe AC</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-accent">Check Availability</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Logo & Desc -->
+        <div class="footer-col">
+          <a href="index.html" class="footer-logo">
+            <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+          </a>
+          <p class="footer-desc">Providing comfort, warmth, and reliable island hospitality in Port Blair. A home away from home in the Andamans.</p>
+        </div>
+        
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="rooms.html">Rooms & Suites</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="facilities.html">Facilities & Services</a></li>
+            <li><a href="contact.html">Contact & Directions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact Info -->
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Govt. Polytechnic Road, Dolly Gunj, Sri Vijaya Puram, PIN 744103</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <span>8900911010</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fab fa-whatsapp"></i>
+              <span>9434270555</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>havenandamanreservation@gmail.com</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Socials -->
+        <div class="footer-col">
+          <h3>Follow Us</h3>
+          <div class="footer-socials">
+            <a href="https://wa.me/919434270555" class="social-icon" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom copyright -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Hotel Haven. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global JS Script -->
+  <script src="script.js"></script>
+</body>
+</html>

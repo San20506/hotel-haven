@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rooms & Suites — Hotel Haven</title>
+  <meta name="description" content="Explore our range of comfortable air-conditioned rooms at Hotel Haven, Port Blair. From cozy double rooms to spacious family suites.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Global CSS Style -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo" id="headerLogo">
+        <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+        <span>Hotel Haven</span>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link" id="linkHome">Home</a>
+        <a href="rooms.html" class="nav-link active" id="linkRooms">Rooms & Suites</a>
+        <a href="about.html" class="nav-link" id="linkAbout">About</a>
+        <a href="facilities.html" class="nav-link" id="linkFacilities">Facilities</a>
+        <a href="contact.html" class="nav-link" id="linkContact">Contact</a>
+        <a href="contact.html" class="btn btn-accent" id="navBookBtn">Book Now</a>
+      </nav>
+      <button class="hamburger" id="navToggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section class="page-header" style="background-image: url('assets/Deluxe%20(Double%20BED)%20AC/1.JPG');">
+    <div class="page-header-content container">
+      <h1>Rooms & Suites</h1>
+      <p>Choose your ideal stay from our range of comfortable, fully air-conditioned accommodations.</p>
+    </div>
+  </section>
+
+  <!-- Sticky booking bar container for scrolled states -->
+  <div style="height: 1px; background: transparent;"></div>
+
+  <!-- Room Listings Section -->
+  <section class="section-padding">
+    <div class="container">
+      
+      <!-- Filter and Sort Bar -->
+      <div class="rooms-filter-bar">
+        <div class="filter-group">
+          <label for="filterByOccupancy"><i class="fas fa-filter primary-color"></i> Filter By:</label>
+          <select id="filterByOccupancy" class="filter-select" aria-label="Filter by Occupancy">
+            <option value="all" selected>All Occupancy</option>
+            <option value="2">2 Guests Only</option>
+            <option value="4">4 Guests Only</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="sortByPrice"><i class="fas fa-sort primary-color"></i> Sort By:</label>
+          <select id="sortByPrice" class="filter-select" aria-label="Sort by Price">
+            <option value="default" selected>Default Sorting</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Rooms Grid -->
+      <div class="room-grid grid-2 rooms-page-grid">
+        
+        <!-- Room 1: Standard AC -->
+        <div class="room-card" data-base-price="1200" data-occupancy="2">
+          <div class="room-card-img">
+            <img src="assets/Standard(%20Double%20BED)%20AC/1.jpeg" alt="Standard Double AC Room">
+            <span class="room-card-badge">Standard AC</span>
+            <div class="room-card-price">₹1,200 – ₹3,100 / night</div>
+          </div>
+          <div class="room-card-content">
+            <h3>Standard Double AC</h3>
+            <div class="room-card-specs">
+              <div class="room-spec-item"><i class="fas fa-users"></i> 2 Guests</div>
+              <div class="room-spec-item"><i class="fas fa-bed"></i> Double Bed</div>
+              <div class="room-spec-item"><i class="fas fa-expand"></i> 200 sq ft</div>
+            </div>
+            <p class="room-card-description">A cozy, cost-effective option for couples or solo travelers. Meticulously maintained and fully air-conditioned for a restful sleep.</p>
+            <div class="room-card-actions">
+              <a href="rooms/standard.html" class="btn btn-outline" id="exploreStandardBtn">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room 2: Semi Deluxe AC -->
+        <div class="room-card" data-base-price="1600" data-occupancy="2">
+          <div class="room-card-img">
+            <img src="assets/Semi%20Deluxe%20(Double%20BED)%20AC/1.jpeg" alt="Semi Deluxe Double AC Room">
+            <span class="room-card-badge">Semi Deluxe AC</span>
+            <div class="room-card-price">₹1,600 – ₹3,400 / night</div>
+          </div>
+          <div class="room-card-content">
+            <h3>Semi Deluxe Double AC</h3>
+            <div class="room-card-specs">
+              <div class="room-spec-item"><i class="fas fa-users"></i> 2 Guests</div>
+              <div class="room-spec-item"><i class="fas fa-bed"></i> Double Bed</div>
+              <div class="room-spec-item"><i class="fas fa-expand"></i> 220 sq ft</div>
+            </div>
+            <p class="room-card-description">Enhanced comforts featuring handpicked solid wood furnishings, premium bath amenities, and a quiet, relaxed room environment.</p>
+            <div class="room-card-actions">
+              <a href="rooms/semi-deluxe.html" class="btn btn-outline" id="exploreSemiDeluxeBtn">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room 3: Deluxe AC -->
+        <div class="room-card" data-base-price="2500" data-occupancy="2">
+          <div class="room-card-img">
+            <img src="assets/Deluxe%20(Double%20BED)%20AC/1.JPG" alt="Deluxe Double AC Room">
+            <span class="room-card-badge">Deluxe AC</span>
+            <div class="room-card-price">₹2,500 – ₹4,400 / night</div>
+          </div>
+          <div class="room-card-content">
+            <h3>Deluxe Double AC</h3>
+            <div class="room-card-specs">
+              <div class="room-spec-item"><i class="fas fa-users"></i> 2 Guests</div>
+              <div class="room-spec-item"><i class="fas fa-bed"></i> Double Bed</div>
+              <div class="room-spec-item"><i class="fas fa-expand"></i> 240 sq ft</div>
+            </div>
+            <p class="room-card-description">Elegantly styled layouts offering superior space, high-quality linen, private study desk, and lovely hillside views of Port Blair.</p>
+            <div class="room-card-actions">
+              <a href="rooms/deluxe.html" class="btn btn-outline" id="exploreDeluxeBtn">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room 4: Family Semi Deluxe AC -->
+        <div class="room-card" data-base-price="1800" data-occupancy="4">
+          <div class="room-card-img">
+            <img src="assets/Family%20Semi%20Deluxe(Four%20BED)%20AC/1.jpeg" alt="Family Semi Deluxe AC Room">
+            <span class="room-card-badge">Family Semi Deluxe</span>
+            <div class="room-card-price">₹1,800 – ₹5,400 / night</div>
+          </div>
+          <div class="room-card-content">
+            <h3>Family Semi Deluxe AC</h3>
+            <div class="room-card-specs">
+              <div class="room-spec-item"><i class="fas fa-users"></i> 4 Guests</div>
+              <div class="room-spec-item"><i class="fas fa-bed"></i> Four Beds</div>
+              <div class="room-spec-item"><i class="fas fa-expand"></i> 300 sq ft</div>
+            </div>
+            <p class="room-card-description">Spacious four-bed setup (two separate double beds) tailored for small tour groups or families seeking joint comfort at a budget rate.</p>
+            <div class="room-card-actions">
+              <a href="rooms/family-semi-deluxe.html" class="btn btn-outline" id="exploreFamSemiDeluxeBtn">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Room 5: Family Deluxe AC -->
+        <div class="room-card" data-base-price="2200" data-occupancy="4">
+          <div class="room-card-img">
+            <img src="assets/Family%20Deluxe(%20Four%20BED)%20AC/1.jpeg" alt="Family Deluxe AC Room">
+            <span class="room-card-badge">Family Deluxe</span>
+            <div class="room-card-price">₹2,200 – ₹5,800 / night</div>
+          </div>
+          <div class="room-card-content">
+            <h3>Family Deluxe AC</h3>
+            <div class="room-card-specs">
+              <div class="room-spec-item"><i class="fas fa-users"></i> 4 Guests</div>
+              <div class="room-spec-item"><i class="fas fa-bed"></i> Four Beds</div>
+              <div class="room-spec-item"><i class="fas fa-expand"></i> 320 sq ft</div>
+            </div>
+            <p class="room-card-description">Our largest, most premium group suite. Features two king-sized beds, spacious sitting area, and excellent standard group inclusions.</p>
+            <div class="room-card-actions">
+              <a href="rooms/family-deluxe.html" class="btn btn-outline" id="exploreFamDeluxeBtn">View Details</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sticky Booking Bar (Global) -->
+  <div class="booking-bar" style="margin: 0 auto var(--spacing-xl) auto; box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+    <form class="booking-form" action="#" method="GET">
+      <div class="booking-field">
+        <label for="checkin">Check-In</label>
+        <input type="date" id="checkin" name="checkin" required>
+      </div>
+      <div class="booking-field">
+        <label for="checkout">Check-Out</label>
+        <input type="date" id="checkout" name="checkout" required>
+      </div>
+      <div class="booking-field">
+        <label for="guests">Guests</label>
+        <select id="guests" name="guests">
+          <option value="1">1 Guest</option>
+          <option value="2" selected>2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5+ Guests</option>
+        </select>
+      </div>
+      <div class="booking-field">
+        <label for="room">Room Type</label>
+        <select id="room" name="room">
+          <option value="standard">Standard Double AC</option>
+          <option value="semi-deluxe">Semi Deluxe Double AC</option>
+          <option value="deluxe">Deluxe Double AC</option>
+          <option value="family-semi-deluxe">Family Semi Deluxe AC</option>
+          <option value="family-deluxe">Family Deluxe AC</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-accent">Check Availability</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Logo & Desc -->
+        <div class="footer-col">
+          <a href="index.html" class="footer-logo">
+            <img src="assets/Hotel Haven logo.png" alt="Hotel Haven Logo">
+          </a>
+          <p class="footer-desc">Providing comfort, warmth, and reliable island hospitality in Port Blair. A home away from home in the Andamans.</p>
+        </div>
+        
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="rooms.html">Rooms & Suites</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="facilities.html">Facilities & Services</a></li>
+            <li><a href="contact.html">Contact & Directions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact Info -->
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Govt. Polytechnic Road, Dolly Gunj, Sri Vijaya Puram, PIN 744103</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <span>8900911010</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fab fa-whatsapp"></i>
+              <span>9434270555</span>
+            </div>
+            <div class="footer-contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>havenandamanreservation@gmail.com</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Socials -->
+        <div class="footer-col">
+          <h3>Follow Us</h3>
+          <div class="footer-socials">
+            <a href="https://wa.me/919434270555" class="social-icon" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom copyright -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Hotel Haven. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global JS Script -->
+  <script src="script.js"></script>
+</body>
+</html>
