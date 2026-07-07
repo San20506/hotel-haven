@@ -181,4 +181,81 @@ document.addEventListener('DOMContentLoaded', () => {
       alert(`Redirecting you to checkout for: ${accommodation} starting on ${dateVal}.`);
     });
   }
+
+  // ==========================================
+  // 7. Room Booking Calculator
+  // ==========================================
+  const bookingForm = document.querySelector('.widget-booking-form');
+  if (bookingForm) {
+    const checkinInput = bookingForm.querySelector('[name="checkin"]');
+    const checkoutInput = bookingForm.querySelector('[name="checkout"]');
+    const mealplanSelect = bookingForm.querySelector('[name="mealplan"]');
+    const mattressCheckbox = bookingForm.querySelector('[name="extramattress"]');
+
+    const calcNights = bookingForm.querySelector('.calc-nights');
+    const calcPlanPrice = bookingForm.querySelector('.calc-plan-price');
+    const calcMattressRow = bookingForm.querySelector('.calc-mattress-row');
+    const calcMattressPrice = bookingForm.querySelector('.calc-mattress-price');
+    const calcTotal = bookingForm.querySelector('.calc-total');
+
+    function formatCurrency(amount) {
+      return '₹' + amount.toLocaleString('en-IN');
+    }
+
+    function calculateTotal() {
+      if (!checkinInput || !checkoutInput) return;
+      
+      const checkinDate = new Date(checkinInput.value);
+      const checkoutDate = new Date(checkoutInput.value);
+
+      let nights = 1;
+      if (checkinInput.value && checkoutInput.value) {
+        const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
+        nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        if (nights <= 0) nights = 1;
+      }
+
+      const mealPlan = mealplanSelect ? mealplanSelect.value : 'cp';
+      const isMattress = mattressCheckbox ? mattressCheckbox.checked : false;
+
+      const basePrice = parseInt(bookingForm.getAttribute(`data-base-${mealPlan}`)) || 0;
+      const mattressPrice = isMattress ? (parseInt(bookingForm.getAttribute(`data-extra-${mealPlan}`)) || 0) : 0;
+
+      if (calcNights) calcNights.textContent = `${nights} ${nights === 1 ? 'night' : 'nights'}`;
+      if (calcPlanPrice) calcPlanPrice.textContent = formatCurrency(basePrice);
+
+      if (calcMattressRow) {
+        if (isMattress && mattressPrice > 0) {
+          calcMattressRow.style.display = 'flex';
+          if (calcMattressPrice) calcMattressPrice.textContent = formatCurrency(mattressPrice);
+        } else {
+          calcMattressRow.style.display = 'none';
+        }
+      }
+
+      const total = (basePrice + mattressPrice) * nights;
+      if (calcTotal) calcTotal.textContent = formatCurrency(total);
+    }
+
+    if (checkinInput) checkinInput.addEventListener('change', calculateTotal);
+    if (checkoutInput) checkoutInput.addEventListener('change', calculateTotal);
+    if (mealplanSelect) mealplanSelect.addEventListener('change', calculateTotal);
+    if (mattressCheckbox) mattressCheckbox.addEventListener('change', calculateTotal);
+
+    // Initial check-in/check-out date defaults (tomorrow & day after tomorrow)
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const dayAfter = new Date(today);
+    dayAfter.setDate(dayAfter.getDate() + 2);
+
+    if (checkinInput && !checkinInput.value) {
+      checkinInput.value = tomorrow.toISOString().split('T')[0];
+    }
+    if (checkoutInput && !checkoutInput.value) {
+      checkoutInput.value = dayAfter.toISOString().split('T')[0];
+    }
+
+    calculateTotal();
+  }
 });
