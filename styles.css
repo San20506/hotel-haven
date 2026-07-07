@@ -29,10 +29,10 @@
   --color-amber: #E9A443;
   --color-dark: #1A1A2E;
   
-  --color-bg-base: #F3F9FE;
+  --color-bg-base: #FFF5EE;       /* Warm seashell background */
   --color-bg-white: #FFFFFF;
   --color-text-main: #1A1A2E;
-  --color-text-muted: #5A6B7D;
+  --color-text-muted: #7A6B5D;
   --color-text-light: #FFFFFF;
   
   --font-heading: 'Nohemi', 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -364,7 +364,7 @@ input:focus, select:focus, textarea:focus {
   min-height: 95vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-cyan) 100%);
+  background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-orange) 100%);
   background-image: url('assets/bg-hero.jpg');
   background-size: cover;
   background-position: center;
@@ -1023,7 +1023,7 @@ input:focus, select:focus, textarea:focus {
 .book-visual {
   width: 260px;
   height: 360px;
-  background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-cyan) 100%);
+  background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-orange) 100%);
   border-radius: 4px 16px 16px 4px;
   box-shadow: 15px 15px 30px rgba(30, 47, 79, 0.15);
   position: relative;
