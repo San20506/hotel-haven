@@ -605,25 +605,24 @@ input:focus, select:focus, textarea:focus {
 
 .product-visual {
   height: 240px;
-  background: linear-gradient(135deg, var(--color-ocean-waters), var(--color-denim-blue));
+  background: var(--color-denim-blue);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-yellow-sun);
   position: relative;
+  overflow: hidden;
 }
 
-.product-card:nth-child(2) .product-visual {
-  background: linear-gradient(135deg, var(--color-coral-reef), var(--color-salmon-pink));
+.product-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.product-card:nth-child(3) .product-visual {
-  background: linear-gradient(135deg, var(--color-yellow-sun), var(--color-ocean-waters));
-}
-
-.product-visual svg {
-  width: 60px;
-  height: 60px;
+.product-card:hover .product-visual img {
+  transform: scale(1.05);
 }
 
 .product-info {
