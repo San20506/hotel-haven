@@ -19,11 +19,11 @@ if os.path.isdir(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 ROOMS = {
-    "Standard Double AC": {"ep": 1200, "cp": 1500, "map": 2300, "ap": 3100, "max": 2},
+    "Standard Double AC": {"ep": 1200, "cp": 1400, "map": 2200, "ap": 3000, "max": 2},
     "Semi Deluxe Double AC": {"ep": 1600, "cp": 1800, "map": 2600, "ap": 3400, "max": 2},
     "Family Semi Deluxe AC": {"ep": 1800, "cp": 2200, "map": 3800, "ap": 5400, "max": 4},
-    "Family Deluxe AC": {"ep": 2200, "cp": 2600, "map": 4200, "ap": 5800, "max": 4},
-    "Deluxe Double AC": {"ep": 2500, "cp": 2800, "map": 3600, "ap": 4400, "max": 2},
+    "Family Deluxe AC": {"ep": 2200, "cp": 2500, "map": 4100, "ap": 5700, "max": 4},
+    "Deluxe Double AC": {"ep": 2500, "cp": 2600, "map": 3400, "ap": 4200, "max": 2},
 }
 
 MEAL_PLANS = {"EP": "Room Only", "CP": "Breakfast", "MAP": "Breakfast & Dinner", "AP": "All Meals"}

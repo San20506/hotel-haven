@@ -3,31 +3,34 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 1. Navbar Scroll Effect & Mobile Menu Toggle
   // ==========================================
-  const navbar = document.getElementById('navbar');
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinks = document.getElementById('navLinks');
-  
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
+  const navbar = document.getElementById('navbar') || document.querySelector('.navbar');
+  const menuToggle = document.getElementById('menuToggle') || document.getElementById('navToggle') || document.querySelector('.menu-toggle');
+  const navLinks = document.getElementById('navLinks') || document.getElementById('navMenu') || document.querySelector('.nav-menu');
 
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    // Rotate toggle lines
-    menuToggle.classList.toggle('active');
-  });
-
-  // Close menu on link click
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('active');
-      menuToggle.classList.remove('active');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
     });
-  });
+  }
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+    });
+
+    // Close menu on link click
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        menuToggle.classList.remove('active');
+      });
+    });
+  }
 
   // ==========================================
   // 2. Products Slider / Carousel (Card Switching)
@@ -37,51 +40,53 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextSlide = document.getElementById('nextSlide');
   const sliderDots = document.querySelectorAll('.slider-dot');
   const productCards = document.querySelectorAll('.product-card');
-  
-  let currentSlide = 0;
-  const totalSlides = productCards.length;
 
-  function updateSlider() {
-    // Only apply slide translation if viewport width is less than or equal to 992px
-    if (window.innerWidth <= 992) {
-      sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-    } else {
-      sliderTrack.style.transform = 'none';
+  if (sliderTrack && prevSlide && nextSlide && productCards.length > 0 && sliderDots.length > 0) {
+    let currentSlide = 0;
+    const totalSlides = productCards.length;
+
+    function updateSlider() {
+      // Only apply slide translation if viewport width is less than or equal to 992px
+      if (window.innerWidth <= 992) {
+        sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+      } else {
+        sliderTrack.style.transform = 'none';
+      }
+
+      // Update dots
+      sliderDots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
     }
-    
-    // Update dots
-    sliderDots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentSlide);
-    });
-  }
 
-  nextSlide.addEventListener('click', () => {
-    if (currentSlide < totalSlides - 1) {
-      currentSlide++;
-    } else {
-      currentSlide = 0; // wrap around
-    }
-    updateSlider();
-  });
-
-  prevSlide.addEventListener('click', () => {
-    if (currentSlide > 0) {
-      currentSlide--;
-    } else {
-      currentSlide = totalSlides - 1; // wrap around
-    }
-    updateSlider();
-  });
-
-  sliderDots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      currentSlide = index;
+    nextSlide.addEventListener('click', () => {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+      } else {
+        currentSlide = 0; // wrap around
+      }
       updateSlider();
     });
-  });
 
-  // Re-evaluate on window resize
-  window.addEventListener('resize', updateSlider);
+    prevSlide.addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+      } else {
+        currentSlide = totalSlides - 1; // wrap around
+      }
+      updateSlider();
+    });
+
+    sliderDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentSlide = index;
+        updateSlider();
+      });
+    });
+
+    // Re-evaluate on window resize
+    window.addEventListener('resize', updateSlider);
+  }
 
   // ==========================================
   // 3. FAQ Accordion Animation & Toggles
@@ -257,5 +262,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     calculateTotal();
+  }
+
+  // ==========================================
+  // 8. Room Gallery Thumbnail Switcher
+  // ==========================================
+  const galleryMainImg = document.querySelector('.gallery-main img');
+  const thumbItems = document.querySelectorAll('.thumb-item');
+
+  if (galleryMainImg && thumbItems.length > 0) {
+    thumbItems.forEach(item => {
+      item.addEventListener('click', () => {
+        // Remove active class from all thumbnails
+        thumbItems.forEach(t => t.classList.remove('active'));
+        // Add active class to clicked thumbnail
+        item.classList.add('active');
+        // Switch main image source
+        const newSrc = item.querySelector('img').getAttribute('src');
+        galleryMainImg.setAttribute('src', newSrc);
+      });
+    });
   }
 });
