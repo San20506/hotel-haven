@@ -1,0 +1,16 @@
+{
+  "name": "hotel-haven-cloudflare",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply hotel-haven-db",
+    "db:create": "wrangler d1 create hotel-haven-db"
+  },
+  "dependencies": {
+    "resend": "^4.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

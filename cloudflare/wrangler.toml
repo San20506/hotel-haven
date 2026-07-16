@@ -1,0 +1,24 @@
+name = "hotel-haven"
+main = "src/worker.js"
+
+# Cloudflare D1 database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "hotel-haven-db"
+database_id = ""
+
+# Resend API key (set via `npx wrangler secret put RESEND_API_KEY`)
+[vars]
+RESEND_FROM = "Hotel Haven <haven@yourdomain.com>"
+SITE_URL = "https://yourdomain.com"
+
+[env.production]
+SITE_URL = "https://yourdomain.com"
+
+[env.preview]
+SITE_URL = "https://preview.yourdomain.com"
+
+# Route all /api/* through the worker
+[[rules]]
+type = "WorkerRoute"
+pattern = "/api/*"
