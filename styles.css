@@ -787,7 +787,7 @@ input:focus, select:focus, textarea:focus {
   display: flex;
   align-items: center;
   background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-orange) 100%);
-  background-image: url('assets/underwater-corals.jpg');
+  background-image: url('assets/hero-bg.jpeg');
   background-size: cover;
   background-position: center;
   background-blend-mode: overlay;
