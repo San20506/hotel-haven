@@ -47,13 +47,13 @@ def build_guide_html(guest_name, room_type, check_in, check_out, meal_plan, chec
       </div>
 
       <div style="background: #f8f9fa; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-        <h3 style="font-size: 14px; color: #3B66E5; margin: 0 0 8px;">🛵 Explore Port Blair</h3>
+        <h3 style="font-size: 14px; color: #3B66E5; margin: 0 0 8px;">🛵 Explore Sri Vijaya Puram</h3>
         <p style="font-size: 14px; color: #333; margin: 0; line-height: 1.5;">
           • Cellular Jail & Light & Sound Show (4 km)<br>
           • Corbyn's Cove Beach (5 km)<br>
           • Anthropological Museum (3.5 km)<br>
           • Marina Park & Aquarium (4 km)<br>
-          • Ferry to Havelock / Neil Island (from Haddo Harbour, 4 km)
+          • Ferry to Swaraj Dweep / Neil (Shaheed Dweep) (from Haddo Harbour, 4 km)
         </p>
       </div>
 
