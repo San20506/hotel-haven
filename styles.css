@@ -839,7 +839,7 @@ input:focus, select:focus, textarea:focus {
 
 .hero-text h1 span {
   font-size: 3.3rem;
-  color: #1A3A6B;
+  color: #1A1A2E;
 }
 
 .hero-text p {
@@ -868,7 +868,6 @@ input:focus, select:focus, textarea:focus {
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   animation: morphBlob 8s ease-in-out infinite;
   box-shadow: 0 20px 50px rgba(255, 215, 0, 0.35), inset 0 0 60px rgba(255, 243, 176, 0.15);
-  border: 3px solid #FFF3B0;
   display: flex;
   align-items: center;
   justify-content: center;
