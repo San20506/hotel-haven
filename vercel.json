@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "buildCommand": "echo 'static'",
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/[...catchall]" },
+    { "source": "/admin", "destination": "/api/[...catchall]" }
+  ],
+  "headers": [
+    {
+      "source": "/island-guide-2026.pdf",
+      "headers": [
+        { "key": "Content-Type", "value": "application/pdf" },
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}

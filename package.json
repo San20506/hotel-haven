@@ -1,0 +1,20 @@
+{
+  "name": "hotel-haven",
+  "version": "1.0.0",
+  "description": "Hotel Haven — Booking & Island Guide website",
+  "type": "module",
+  "scripts": {
+    "vercel-build": "echo 'static site'",
+    "dev": "vercel dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/San20506/hotel-haven.git"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.4"
+  },
+  "devDependencies": {
+    "vercel": "^56.2.1"
+  }
+}
