@@ -180,22 +180,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const buyNowBtn = document.getElementById('buyNowBtn');
 
   if (freebieForm) {
-    freebieForm.addEventListener('submit', (e) => {
+    freebieForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('freebieEmail').value;
       const name = document.getElementById('freebieName').value;
-      
-      // Feedback to user
       const submitBtn = document.getElementById('freebieSubmitBtn');
-      submitBtn.textContent = 'Preparing Guide...';
+      const originalText = submitBtn.textContent;
+
+      submitBtn.textContent = 'Sending Guide...';
       submitBtn.disabled = true;
-      
-      setTimeout(() => {
-        alert(`Thank you, ${name}! Your free guide has been sent to ${email}.`);
-        freebieForm.reset();
-        submitBtn.textContent = 'Send Guide to My Inbox';
-        submitBtn.disabled = false;
-      }, 1200);
+
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+
+        const res = await fetch('/api/freebie-guide', { method: 'POST', body: formData });
+        const data = await res.json();
+
+        if (data.sent) {
+          alert(`Thank you, ${name}! Your guide has been sent to ${email}. Check your inbox (and spam folder).`);
+          freebieForm.reset();
+        } else {
+          alert('Something went wrong sending the guide. Please try again or contact us directly.');
+        }
+      } catch {
+        alert('Could not reach the server. Please try again later.');
+      }
+
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     });
   }
 

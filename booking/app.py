@@ -9,7 +9,7 @@ import uvicorn
 sys.path.insert(0, os.path.dirname(__file__))
 
 from database import init_db, create_booking, get_all_bookings, get_booking, mark_guide_sent
-from guide import build_guide_html
+from guide import build_guide_html, build_freebie_guide_html
 from email_sender import send_guide
 
 app = FastAPI(title="Hotel Haven Booking Pipeline")
@@ -189,6 +189,17 @@ def admin_dashboard(request: Request):
     else:
         sent = None
     return render_admin(request, created=created, sent=sent)
+
+@app.post("/api/freebie-guide")
+def send_freebie_guide(
+    name: str = Form(...),
+    email: str = Form(...),
+):
+    guide_html = build_freebie_guide_html(name)
+    pdf_path = os.path.join(os.path.dirname(__file__), "island-guide-2026.pdf")
+    sent = send_guide(email, name, guide_html, pdf_path=pdf_path)
+    return {"sent": sent, "name": name}
+
 
 @app.post("/api/booking")
 def add_booking(
