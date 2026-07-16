@@ -839,7 +839,7 @@ input:focus, select:focus, textarea:focus {
 
 .hero-text h1 span {
   font-size: 3.6rem;
-  color: var(--color-amber);
+  color: #1A1A2E;
 }
 
 .hero-text p {
