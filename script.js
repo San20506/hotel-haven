@@ -115,15 +115,41 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const packageSelect = document.getElementById('packageSelect');
   const priceAmount = document.getElementById('priceAmount');
+  const extraMattressGroup = document.getElementById('extraMattressGroup');
+  const cartExtraMattress = document.getElementById('cartExtraMattress');
+  let currentBasePrice = 2500;
+
+  function updatePricingDisplay() {
+    const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+    const basePrice = parseInt(selectedOption.getAttribute('data-price')) || 0;
+    const extraPrice = parseInt(selectedOption.getAttribute('data-extra')) || 0;
+    currentBasePrice = basePrice;
+
+    // Show extra mattress checkbox only for rooms that offer it (data-extra > 0)
+    if (extraMattressGroup) {
+      if (extraPrice > 0) {
+        extraMattressGroup.style.display = 'block';
+      } else {
+        extraMattressGroup.style.display = 'none';
+        if (cartExtraMattress) cartExtraMattress.checked = false;
+      }
+    }
+
+    // Calculate displayed price
+    const mattressAddon = cartExtraMattress && cartExtraMattress.checked ? extraPrice : 0;
+    const displayPrice = basePrice + mattressAddon;
+    priceAmount.textContent = displayPrice.toLocaleString('en-IN');
+  }
 
   if (packageSelect && priceAmount) {
-    packageSelect.addEventListener('change', (e) => {
-      const selectedOption = e.target.options[e.target.selectedIndex];
-      const newPrice = selectedOption.getAttribute('data-price');
-      if (newPrice) {
-        priceAmount.textContent = newPrice;
-      }
-    });
+    packageSelect.addEventListener('change', updatePricingDisplay);
+
+    if (cartExtraMattress) {
+      cartExtraMattress.addEventListener('change', updatePricingDisplay);
+    }
+
+    // Initial state
+    updatePricingDisplay();
   }
 
   // ==========================================

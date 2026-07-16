@@ -386,13 +386,19 @@
           <div class="pricing-form-group">
             <label for="packageSelect">Select Room Accommodation</label>
             <select id="packageSelect">
-              <option value="standard" data-price="1,200">Standard Double AC — ₹1,200 / night</option>
-              <option value="semi-deluxe" data-price="1,600">Semi Deluxe Double AC — ₹1,600 / night</option>
-              <option value="family-semi-deluxe" data-price="1,800">Family Semi Deluxe AC — ₹1,800 / night</option>
-              <option value="family" data-price="2,200">Family Deluxe AC — ₹2,200 / night</option>
-              <option value="deluxe" data-price="2,500" selected>Deluxe Double AC — ₹2,500 / night</option>
+              <option value="standard" data-price="1,200" data-extra="0">Standard Double AC — ₹1,200 / night</option>
+              <option value="semi-deluxe" data-price="1,600" data-extra="700">Semi Deluxe Double AC — ₹1,600 / night</option>
+              <option value="family-semi-deluxe" data-price="1,800" data-extra="0">Family Semi Deluxe AC — ₹1,800 / night</option>
+              <option value="family" data-price="2,200" data-extra="0">Family Deluxe AC — ₹2,200 / night</option>
+              <option value="deluxe" data-price="2,500" data-extra="0" selected>Deluxe Double AC — ₹2,500 / night</option>
             </select>
-            <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.5rem;">Extra mattress available at ₹700 / night (Semi Deluxe rooms)</p>
+          </div>
+          
+          <div class="pricing-form-group" id="extraMattressGroup" style="display: none;">
+            <label class="extra-mattress-checkbox" style="justify-content: flex-start; padding: 0;">
+              <input type="checkbox" id="cartExtraMattress">
+              <span>Add Extra Mattress — ₹700 / night</span>
+            </label>
           </div>
           
           <div class="pricing-form-group">
