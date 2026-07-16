@@ -224,11 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const msg = checkoutVal
-        ? `${accommodation} from ${dateVal} to ${checkoutVal}`
-        : `${accommodation} starting on ${dateVal}`;
-
-      alert(`Redirecting you to checkout for: ${msg}.`);
+      window.location.href = 'tel:+918900911010';
     });
   }
 
