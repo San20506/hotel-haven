@@ -53,7 +53,7 @@ def build_guide_html(guest_name, room_type, check_in, check_out, meal_plan, chec
           • Corbyn's Cove Beach (5 km)<br>
           • Anthropological Museum (3.5 km)<br>
           • Marina Park & Aquarium (4 km)<br>
-          • Ferry to Swaraj Dweep / Neil (Shaheed Dweep) (from Haddo Harbour, 4 km)
+          • Ferry to Swaraj Dweep / Shaheed Dweep (Neil) (from Haddo Harbour, 4 km)
         </p>
       </div>
 
