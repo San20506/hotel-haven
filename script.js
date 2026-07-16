@@ -121,8 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updatePricingDisplay() {
     const selectedOption = packageSelect.options[packageSelect.selectedIndex];
-    const basePrice = parseInt(selectedOption.getAttribute('data-price')) || 0;
-    const extraPrice = parseInt(selectedOption.getAttribute('data-extra')) || 0;
+    const basePrice = parseInt((selectedOption.getAttribute('data-price') || '0').replace(/,/g, '')) || 0;
+    const extraPrice = parseInt((selectedOption.getAttribute('data-extra') || '0').replace(/,/g, '')) || 0;
     currentBasePrice = basePrice;
 
     // Show extra mattress checkbox only for rooms that offer it (data-extra > 0)
