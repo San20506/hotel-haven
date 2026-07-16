@@ -203,13 +203,18 @@ document.addEventListener('DOMContentLoaded', () => {
     buyNowBtn.addEventListener('click', () => {
       const accommodation = packageSelect.options[packageSelect.selectedIndex].text.split(' — ')[0];
       const dateVal = document.getElementById('bookingDates').value;
+      const checkoutVal = document.getElementById('bookingCheckout').value;
       
       if (!dateVal) {
         alert('Please choose a check-in date before reserving.');
         return;
       }
 
-      alert(`Redirecting you to checkout for: ${accommodation} starting on ${dateVal}.`);
+      const msg = checkoutVal
+        ? `${accommodation} from ${dateVal} to ${checkoutVal}`
+        : `${accommodation} starting on ${dateVal}`;
+
+      alert(`Redirecting you to checkout for: ${msg}.`);
     });
   }
 
