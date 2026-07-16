@@ -864,11 +864,11 @@ input:focus, select:focus, textarea:focus {
 .hero-blob {
   width: 380px;
   height: 380px;
-  background: linear-gradient(135deg, #F5D78E 0%, #E9A443 30%, #D4872A 60%, #F0703A 100%);
+  background: linear-gradient(135deg, #FFF3B0 0%, #FFD700 25%, #F5A623 55%, #FF7B24 100%);
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   animation: morphBlob 8s ease-in-out infinite;
-  box-shadow: 0 20px 40px rgba(233, 164, 67, 0.25);
-  border: 3px solid #F5D78E;
+  box-shadow: 0 20px 50px rgba(255, 215, 0, 0.35), inset 0 0 60px rgba(255, 243, 176, 0.15);
+  border: 3px solid #FFF3B0;
   display: flex;
   align-items: center;
   justify-content: center;
