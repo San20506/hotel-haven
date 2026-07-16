@@ -32,6 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Hero Contact Us button — scrolls to contact section & opens dialer
+  const heroContactBtn = document.getElementById('heroSecondaryBtn');
+  if (heroContactBtn) {
+    heroContactBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open('tel:+918900911010', '_self');
+      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
   // ==========================================
   // 2. Products Slider / Carousel (Card Switching)
   // ==========================================
