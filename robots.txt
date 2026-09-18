@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hotel-haven-umber.vercel.app/sitemap.xml
