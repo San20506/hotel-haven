@@ -1,337 +1,309 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ==========================================
-  // 1. Navbar Scroll Effect & Mobile Menu Toggle
-  // ==========================================
+  // 1. Navbar scroll + mobile toggle (spring feel)
   const navbar = document.getElementById('navbar') || document.querySelector('.navbar');
   const menuToggle = document.getElementById('menuToggle') || document.getElementById('navToggle') || document.querySelector('.menu-toggle');
   const navLinks = document.getElementById('navLinks') || document.getElementById('navMenu') || document.querySelector('.nav-menu');
 
   if (navbar) {
+    let ticking=false;
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
+      if(!ticking){
+        requestAnimationFrame(()=>{
+          navbar.classList.toggle('scrolled', window.scrollY > 24);
+          ticking=false;
+        });
+        ticking=true;
       }
-    });
+    }, {passive:true});
   }
-
   if (menuToggle && navLinks) {
+    const close=()=>{ navLinks.classList.remove('active'); menuToggle.classList.remove('active'); document.body.style.overflow=''; };
+    const open=()=>{ navLinks.classList.add('active'); menuToggle.classList.add('active'); document.body.style.overflow='hidden'; };
     menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      menuToggle.classList.toggle('active');
+      navLinks.classList.contains('active') ? close() : open();
     });
-
-    // Close menu on link click
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        menuToggle.classList.remove('active');
-      });
-    });
+    navLinks.querySelectorAll('a').forEach(a=> a.addEventListener('click', close));
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+    document.addEventListener('click', e=>{ if(navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) close(); });
   }
 
-  // Hero Contact Us button — scrolls to contact section & opens dialer
+  // Hero WhatsApp / call
   const heroContactBtn = document.getElementById('heroSecondaryBtn');
   if (heroContactBtn) {
     heroContactBtn.addEventListener('click', (e) => {
+      // taste: single primary CTA restraint — keep both but WhatsApp is secondary ghost
+      if(heroContactBtn.getAttribute('href')?.startsWith('tel:')) return;
       e.preventDefault();
-      window.open('tel:+918900911010', '_self');
-      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+      window.open('https://wa.me/919434270555?text=Hi%20Hotel%20Haven%2C%20I%20want%20to%20check%20availability','_blank');
     });
   }
 
-  // ==========================================
-  // 2. Products Slider / Carousel (Card Switching)
-  // ==========================================
+  // 2. Products slider - desktop grid, mobile native scroll + dots sync (emil spring)
   const sliderTrack = document.getElementById('sliderTrack');
   const prevSlide = document.getElementById('prevSlide');
   const nextSlide = document.getElementById('nextSlide');
   const sliderDots = document.querySelectorAll('.slider-dot');
   const productCards = document.querySelectorAll('.product-card');
-
-  if (sliderTrack && prevSlide && nextSlide && productCards.length > 0 && sliderDots.length > 0) {
-    let currentSlide = 0;
-    const totalSlides = productCards.length;
-
-    function updateSlider() {
-      // Only apply slide translation if viewport width is less than or equal to 992px
-      if (window.innerWidth <= 992) {
-        sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-      } else {
-        sliderTrack.style.transform = 'none';
+  if (sliderTrack && productCards.length){
+    let current=0;
+    const isMobile=()=> window.innerWidth <= 768;
+    const go=(idx)=>{
+      current = (idx + productCards.length) % productCards.length;
+      sliderDots.forEach((d,i)=> d.classList.toggle('active', i===current));
+      if(isMobile()){
+        const card = productCards[current];
+        const left = card.offsetLeft - sliderTrack.offsetLeft;
+        sliderTrack.scrollTo({left, behavior:'smooth'});
       }
-
-      // Update dots
-      sliderDots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-      });
-    }
-
-    nextSlide.addEventListener('click', () => {
-      if (currentSlide < totalSlides - 1) {
-        currentSlide++;
-      } else {
-        currentSlide = 0; // wrap around
-      }
-      updateSlider();
+    };
+    if(prevSlide) prevSlide.addEventListener('click', ()=> go(current-1));
+    if(nextSlide) nextSlide.addEventListener('click', ()=> go(current+1));
+    sliderDots.forEach((d,i)=> d.addEventListener('click', ()=> go(i)));
+    // sync dots on manual scroll
+    let scrollT;
+    if(isMobile()) sliderTrack.addEventListener('scroll', ()=>{
+      clearTimeout(scrollT);
+      scrollT=setTimeout(()=>{
+        let best=0, bestDist=Infinity;
+        productCards.forEach((c,i)=>{
+          const dist=Math.abs(c.offsetLeft - sliderTrack.scrollLeft - sliderTrack.offsetLeft);
+          if(dist < bestDist){ bestDist=dist; best=i; }
+        });
+        current=best;
+        sliderDots.forEach((d,i)=> d.classList.toggle('active', i===current));
+      }, 80);
+    }, {passive:true});
+    // keyboard
+    sliderTrack.setAttribute('tabindex','0');
+    sliderTrack.addEventListener('keydown', e=>{
+      if(e.key==='ArrowRight') go(current+1);
+      if(e.key==='ArrowLeft') go(current-1);
     });
-
-    prevSlide.addEventListener('click', () => {
-      if (currentSlide > 0) {
-        currentSlide--;
-      } else {
-        currentSlide = totalSlides - 1; // wrap around
-      }
-      updateSlider();
-    });
-
-    sliderDots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        currentSlide = index;
-        updateSlider();
-      });
-    });
-
-    // Re-evaluate on window resize
-    window.addEventListener('resize', updateSlider);
+    window.addEventListener('resize', ()=> go(current));
+    // auto-advance on mobile only (4.5s), pause on hover/touch, respect reduced-motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let autoTimer=null;
+    const startAuto=()=>{
+      if(prefersReduced || !isMobile()) return;
+      stopAuto();
+      autoTimer=setInterval(()=> go(current+1), 4500);
+    };
+    const stopAuto=()=>{ if(autoTimer){ clearInterval(autoTimer); autoTimer=null; } };
+    startAuto();
+    sliderTrack.addEventListener('mouseenter', stopAuto);
+    sliderTrack.addEventListener('mouseleave', startAuto);
+    sliderTrack.addEventListener('touchstart', stopAuto, {passive:true});
+    sliderTrack.addEventListener('touchend', ()=> setTimeout(startAuto, 3000), {passive:true});
+    sliderTrack.addEventListener('focusin', stopAuto);
+    sliderTrack.addEventListener('focusout', startAuto);
+    window.addEventListener('resize', ()=> { prefersReduced ? stopAuto() : startAuto(); });
+    document.addEventListener('visibilitychange', ()=> document.hidden ? stopAuto() : startAuto());
   }
 
-  // ==========================================
-  // 3. FAQ Accordion Animation & Toggles
-  // ==========================================
-  const faqItems = document.querySelectorAll('.faq-item');
-
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
-    question.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
-      
-      // Close other items
-      faqItems.forEach(otherItem => {
-        otherItem.classList.remove('active');
-      });
-
-      // Toggle current item
-      if (!isActive) {
-        item.classList.add('active');
-      }
-    });
+  // 3. FAQ accordion - allow keyboard + single open
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const q=item.querySelector('.faq-question');
+    if(!q) return;
+    q.setAttribute('tabindex','0');
+    q.setAttribute('role','button');
+    q.setAttribute('aria-expanded', item.classList.contains('active')?'true':'false');
+    const toggle=()=>{
+      const wasActive=item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(o=>{ o.classList.remove('active'); o.querySelector('.faq-question')?.setAttribute('aria-expanded','false'); });
+      if(!wasActive){ item.classList.add('active'); q.setAttribute('aria-expanded','true'); }
+    };
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); }});
   });
 
-  // ==========================================
-  // 4. Pricing Package Price Selector
-  // ==========================================
+  // 4. Pricing selector (preserve)
   const packageSelect = document.getElementById('packageSelect');
   const priceAmount = document.getElementById('priceAmount');
   const extraMattressGroup = document.getElementById('extraMattressGroup');
   const cartExtraMattress = document.getElementById('cartExtraMattress');
-  let currentBasePrice = 2500;
-
-  function updatePricingDisplay() {
-    const selectedOption = packageSelect.options[packageSelect.selectedIndex];
-    const basePrice = parseInt((selectedOption.getAttribute('data-price') || '0').replace(/,/g, '')) || 0;
-    const extraPrice = parseInt((selectedOption.getAttribute('data-extra') || '0').replace(/,/g, '')) || 0;
-    currentBasePrice = basePrice;
-
-    // Show extra mattress checkbox only for rooms that offer it (data-extra > 0)
-    if (extraMattressGroup) {
-      if (extraPrice > 0) {
-        extraMattressGroup.style.display = 'block';
-      } else {
-        extraMattressGroup.style.display = 'none';
-        if (cartExtraMattress) cartExtraMattress.checked = false;
-      }
+  function updatePricingDisplay(){
+    if(!packageSelect || !priceAmount) return;
+    const opt=packageSelect.options[packageSelect.selectedIndex];
+    const base=parseInt((opt.getAttribute('data-price')||'0').replace(/,/g,''))||0;
+    const extra=parseInt((opt.getAttribute('data-extra')||'0').replace(/,/g,''))||0;
+    if(extraMattressGroup){
+      const show=extra>0;
+      extraMattressGroup.style.display= show ? 'block':'none';
+      if(!show && cartExtraMattress) cartExtraMattress.checked=false;
     }
-
-    // Calculate displayed price
-    const mattressAddon = cartExtraMattress && cartExtraMattress.checked ? extraPrice : 0;
-    const displayPrice = basePrice + mattressAddon;
-    priceAmount.textContent = displayPrice.toLocaleString('en-IN');
+    const addon= cartExtraMattress?.checked ? extra:0;
+    priceAmount.textContent=(base+addon).toLocaleString('en-IN');
+    // micro spring scale
+    priceAmount.style.transform='scale(1.06)';
+    setTimeout(()=> priceAmount.style.transform='scale(1)', 180);
+    priceAmount.style.transition='transform 180ms cubic-bezier(0.175,0.885,0.32,1.275)';
   }
-
-  if (packageSelect && priceAmount) {
+  if(packageSelect && priceAmount){
     packageSelect.addEventListener('change', updatePricingDisplay);
-
-    if (cartExtraMattress) {
-      cartExtraMattress.addEventListener('change', updatePricingDisplay);
-    }
-
-    // Initial state
+    cartExtraMattress?.addEventListener('change', updatePricingDisplay);
     updatePricingDisplay();
   }
 
-  // ==========================================
-  // 5. Scroll Reveal Intersection Observer
-  // ==========================================
+  // 5. Scroll reveal - staggered spring cascade (Geist spring 100/20 => approx 700ms ease-spring)
   const revealElements = document.querySelectorAll('.reveal-element');
-
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target); // trigger animation only once
+  const revealObserver = new IntersectionObserver((entries, obs)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el=entry.target;
+        // stagger children if it's a grid
+        if(el.classList.contains('products-wrapper') || el.classList.contains('editorial-grid')){
+          el.classList.add('active');
+        } else {
+          el.classList.add('active');
+        }
+        obs.unobserve(el);
       }
     });
-  }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  revealElements.forEach((el,i)=>{
+    el.style.transitionDelay = `${Math.min(i%4 * 70, 210)}ms`;
+    revealObserver.observe(el);
   });
 
-  revealElements.forEach(element => {
-    revealObserver.observe(element);
-  });
-
-  // ==========================================
-  // 6. Interactive Form Handling (Lead & Pricing)
-  // ==========================================
+  // 6. Freebie form
   const freebieForm = document.getElementById('freebieForm');
   const buyNowBtn = document.getElementById('buyNowBtn');
-
-  if (freebieForm) {
-    freebieForm.addEventListener('submit', async (e) => {
+  if(freebieForm){
+    freebieForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      const email = document.getElementById('freebieEmail').value;
-      const name = document.getElementById('freebieName').value;
-      const submitBtn = document.getElementById('freebieSubmitBtn');
-      const originalText = submitBtn.textContent;
-
-      submitBtn.textContent = 'Sending Guide...';
-      submitBtn.disabled = true;
-
-      try {
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-
-        const res = await fetch('/api/freebie-guide', { method: 'POST', body: formData });
-        const data = await res.json();
-
-        if (data.sent) {
-          alert(`Thank you, ${name}! Your guide has been sent to ${email}. Check your inbox (and spam folder).`);
+      const email=document.getElementById('freebieEmail').value.trim();
+      const name=document.getElementById('freebieName').value.trim();
+      const btn=document.getElementById('freebieSubmitBtn');
+      const orig=btn.textContent;
+      btn.textContent='Sending…'; btn.disabled=true; btn.setAttribute('data-state','loading');
+      try{
+        const fd=new FormData(); fd.append('name',name); fd.append('email',email);
+        const res=await fetch('/api/freebie-guide',{method:'POST', body:fd});
+        const data=await res.json();
+        if(data.sent){
+          btn.setAttribute('data-state','success');
+          btn.textContent='Sent ✓';
+          // toast instead of alert (impeccable: less jarring)
+          const toast=document.createElement('div');
+          toast.textContent=`Thank you, ${name}! Guide sent to ${email}. Check spam too.`;
+          Object.assign(toast.style,{position:'fixed',bottom:'18px',left:'50%',transform:'translateX(-50%) translateY(8px)',background:'#0F1F23',color:'white',padding:'12px 16px',borderRadius:'999px',fontSize:'0.88rem',boxShadow:'0 12px 32px rgba(15,31,35,0.22)',zIndex:'9999',opacity:'0',transition:'all 320ms cubic-bezier(0.22,1,0.36,1)'});
+          document.body.appendChild(toast);
+          requestAnimationFrame(()=>{ toast.style.opacity='1'; toast.style.transform='translateX(-50%) translateY(0)'; });
+          setTimeout(()=>{ toast.style.opacity='0'; toast.style.transform='translateX(-50%) translateY(8px)'; setTimeout(()=>toast.remove(),320); }, 4200);
           freebieForm.reset();
+          setTimeout(()=>{ btn.textContent=orig; btn.disabled=false; btn.removeAttribute('data-state'); }, 2000);
         } else {
-          alert('Something went wrong sending the guide. Please try again or contact us directly.');
+          throw new Error('not sent');
         }
-      } catch {
-        alert('Could not reach the server. Please try again later.');
+      } catch{
+        btn.setAttribute('data-state','error');
+        btn.textContent='Try again';
+        setTimeout(()=>{ btn.textContent=orig; btn.disabled=false; btn.removeAttribute('data-state'); }, 2200);
       }
-
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
+    });
+  }
+  if(buyNowBtn){
+    buyNowBtn.addEventListener('click', ()=>{
+      const dateVal=document.getElementById('bookingDates')?.value;
+      if(!dateVal){ alert('Please choose a check-in date before reserving.'); document.getElementById('bookingDates')?.focus(); return; }
+      // add success micro
+      buyNowBtn.setAttribute('data-state','success');
+      buyNowBtn.textContent='Opening dialer…';
+      setTimeout(()=>{ window.location.href='tel:+918900911010'; buyNowBtn.textContent='Reserve now — call to confirm →'; buyNowBtn.removeAttribute('data-state'); }, 300);
     });
   }
 
-  if (buyNowBtn) {
-    buyNowBtn.addEventListener('click', () => {
-      const accommodation = packageSelect.options[packageSelect.selectedIndex].text.split(' — ')[0];
-      const dateVal = document.getElementById('bookingDates').value;
-      const checkoutVal = document.getElementById('bookingCheckout').value;
-      
-      if (!dateVal) {
-        alert('Please choose a check-in date before reserving.');
-        return;
+  // Contact form -> /api/contact (completes email pipeline)
+  const contactForm=document.getElementById('contactForm');
+  if(contactForm){
+    contactForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const btn=contactForm.querySelector('button[type="submit"]');
+      const orig=btn?btn.textContent:'Send Enquiry';
+      if(btn){ btn.textContent='Sending…'; btn.disabled=true; btn.setAttribute('data-state','loading'); }
+      try{
+        const fd=new FormData(contactForm);
+        // ensure field names match server: name,email,phone,roomType,checkin,checkout,guests,message
+        const res=await fetch('/api/contact',{method:'POST', body:fd});
+        const data=await res.json();
+        if(!res.ok || !data.sent) throw new Error('not sent');
+        if(btn){ btn.setAttribute('data-state','success'); btn.textContent='Sent ✓'; }
+        const toast=document.createElement('div');
+        toast.textContent='Thanks! We received your enquiry — check your email.';
+        Object.assign(toast.style,{position:'fixed',bottom:'18px',left:'50%',transform:'translateX(-50%) translateY(8px)',background:'#0F1F23',color:'white',padding:'12px 16px',borderRadius:'999px',fontSize:'0.88rem',boxShadow:'0 12px 32px rgba(15,31,35,0.22)',zIndex:'9999',opacity:'0',transition:'all 320ms cubic-bezier(0.22,1,0.36,1)'});
+        document.body.appendChild(toast);
+        requestAnimationFrame(()=>{ toast.style.opacity='1'; toast.style.transform='translateX(-50%) translateY(0)'; });
+        setTimeout(()=>{ toast.style.opacity='0'; setTimeout(()=>toast.remove(),320); }, 4000);
+        contactForm.reset();
+        setTimeout(()=>{ if(btn){ btn.textContent=orig; btn.disabled=false; btn.removeAttribute('data-state'); }}, 2000);
+      }catch{
+        if(btn){ btn.setAttribute('data-state','error'); btn.textContent='Try again'; setTimeout(()=>{ btn.textContent=orig; btn.disabled=false; btn.removeAttribute('data-state'); }, 2200); }
       }
-
-      window.location.href = 'tel:+918900911010';
     });
   }
 
-  // ==========================================
-  // 7. Room Booking Calculator
-  // ==========================================
-  const bookingForm = document.querySelector('.widget-booking-form');
-  if (bookingForm) {
-    const checkinInput = bookingForm.querySelector('[name="checkin"]');
-    const checkoutInput = bookingForm.querySelector('[name="checkout"]');
-    const mealplanSelect = bookingForm.querySelector('[name="mealplan"]');
-    const mattressCheckbox = bookingForm.querySelector('[name="extramattress"]');
-
-    const calcNights = bookingForm.querySelector('.calc-nights');
-    const calcPlanPrice = bookingForm.querySelector('.calc-plan-price');
-    const calcMattressRow = bookingForm.querySelector('.calc-mattress-row');
-    const calcMattressPrice = bookingForm.querySelector('.calc-mattress-price');
-    const calcTotal = bookingForm.querySelector('.calc-total');
-
-    function formatCurrency(amount) {
-      return '₹' + amount.toLocaleString('en-IN');
-    }
-
-    function calculateTotal() {
-      if (!checkinInput || !checkoutInput) return;
-      
-      const checkinDate = new Date(checkinInput.value);
-      const checkoutDate = new Date(checkoutInput.value);
-
-      let nights = 1;
-      if (checkinInput.value && checkoutInput.value) {
-        const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
-        nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        if (nights <= 0) nights = 1;
+  // 7. Booking calculator
+  const bookingForm=document.querySelector('.widget-booking-form');
+  if(bookingForm){
+    const ci=bookingForm.querySelector('[name="checkin"]');
+    const co=bookingForm.querySelector('[name="checkout"]');
+    const mp=bookingForm.querySelector('[name="mealplan"]');
+    const mcb=bookingForm.querySelector('[name="extramattress"]');
+    const calcNights=bookingForm.querySelector('.calc-nights');
+    const calcPlanPrice=bookingForm.querySelector('.calc-plan-price');
+    const calcMattressRow=bookingForm.querySelector('.calc-mattress-row');
+    const calcMattressPrice=bookingForm.querySelector('.calc-mattress-price');
+    const calcTotal=bookingForm.querySelector('.calc-total');
+    const fmt=n=>'₹'+n.toLocaleString('en-IN');
+    function calc(){
+      if(!ci||!co) return;
+      let nights=1;
+      if(ci.value && co.value){
+        const d=Math.ceil((new Date(co.value)-new Date(ci.value))/(86400000));
+        nights= d>0?d:1;
       }
-
-      const mealPlan = mealplanSelect ? mealplanSelect.value : 'cp';
-      const isMattress = mattressCheckbox ? mattressCheckbox.checked : false;
-
-      const basePrice = parseInt(bookingForm.getAttribute(`data-base-${mealPlan}`)) || 0;
-      const mattressPrice = isMattress ? (parseInt(bookingForm.getAttribute(`data-extra-${mealPlan}`)) || 0) : 0;
-
-      if (calcNights) calcNights.textContent = `${nights} ${nights === 1 ? 'night' : 'nights'}`;
-      if (calcPlanPrice) calcPlanPrice.textContent = formatCurrency(basePrice);
-
-      if (calcMattressRow) {
-        if (isMattress && mattressPrice > 0) {
-          calcMattressRow.style.display = 'flex';
-          if (calcMattressPrice) calcMattressPrice.textContent = formatCurrency(mattressPrice);
-        } else {
-          calcMattressRow.style.display = 'none';
-        }
+      const plan=mp?mp.value:'cp';
+      const isM=mcb?mcb.checked:false;
+      const base=parseInt(bookingForm.getAttribute(`data-base-${plan}`))||0;
+      const mpPrice=isM?parseInt(bookingForm.getAttribute(`data-extra-${plan}`))||0:0;
+      if(calcNights) calcNights.textContent=`${nights} ${nights===1?'night':'nights'}`;
+      if(calcPlanPrice) calcPlanPrice.textContent=fmt(base);
+      if(calcMattressRow){
+        if(isM && mpPrice>0){ calcMattressRow.style.display='flex'; if(calcMattressPrice) calcMattressPrice.textContent=fmt(mpPrice); }
+        else calcMattressRow.style.display='none';
       }
-
-      const total = (basePrice + mattressPrice) * nights;
-      if (calcTotal) calcTotal.textContent = formatCurrency(total);
+      const total=(base+mpPrice)*nights;
+      if(calcTotal) calcTotal.textContent=fmt(total);
     }
-
-    if (checkinInput) checkinInput.addEventListener('change', calculateTotal);
-    if (checkoutInput) checkoutInput.addEventListener('change', calculateTotal);
-    if (mealplanSelect) mealplanSelect.addEventListener('change', calculateTotal);
-    if (mattressCheckbox) mattressCheckbox.addEventListener('change', calculateTotal);
-
-    // Initial check-in/check-out date defaults (tomorrow & day after tomorrow)
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const dayAfter = new Date(today);
-    dayAfter.setDate(dayAfter.getDate() + 2);
-
-    if (checkinInput && !checkinInput.value) {
-      checkinInput.value = tomorrow.toISOString().split('T')[0];
-    }
-    if (checkoutInput && !checkoutInput.value) {
-      checkoutInput.value = dayAfter.toISOString().split('T')[0];
-    }
-
-    calculateTotal();
+    ci?.addEventListener('change',calc); co?.addEventListener('change',calc); mp?.addEventListener('change',calc); mcb?.addEventListener('change',calc);
+    const today=new Date(); const tom=new Date(today); tom.setDate(tom.getDate()+1); const dayAfter=new Date(today); dayAfter.setDate(dayAfter.getDate()+2);
+    if(ci && !ci.value) ci.value=tom.toISOString().split('T')[0];
+    if(co && !co.value) co.value=dayAfter.toISOString().split('T')[0];
+    calc();
   }
 
-  // ==========================================
-  // 8. Room Gallery Thumbnail Switcher
-  // ==========================================
-  const galleryMainImg = document.querySelector('.gallery-main img');
-  const thumbItems = document.querySelectorAll('.thumb-item');
-
-  if (galleryMainImg && thumbItems.length > 0) {
-    thumbItems.forEach(item => {
-      item.addEventListener('click', () => {
-        // Remove active class from all thumbnails
-        thumbItems.forEach(t => t.classList.remove('active'));
-        // Add active class to clicked thumbnail
+  // 8. Gallery switcher with fade
+  const galleryMainImg=document.querySelector('.gallery-main img');
+  const thumbItems=document.querySelectorAll('.thumb-item');
+  if(galleryMainImg && thumbItems.length){
+    thumbItems.forEach(item=>{
+      item.addEventListener('click', ()=>{
+        thumbItems.forEach(t=>t.classList.remove('active'));
         item.classList.add('active');
-        // Switch main image source
-        const newSrc = item.querySelector('img').getAttribute('src');
-        galleryMainImg.setAttribute('src', newSrc);
+        const src=item.querySelector('img')?.getAttribute('src');
+        if(!src) return;
+        galleryMainImg.style.opacity='0';
+        galleryMainImg.style.transform='scale(0.98)';
+        galleryMainImg.style.transition='opacity 220ms ease, transform 220ms ease';
+        setTimeout(()=>{ galleryMainImg.setAttribute('src',src); galleryMainImg.style.opacity='1'; galleryMainImg.style.transform='scale(1)'; }, 180);
       });
     });
   }
+
+  // Impeccable: set min dates to today
+  const dateInputs=document.querySelectorAll('input[type="date"]');
+  const todayStr=new Date().toISOString().split('T')[0];
+  dateInputs.forEach(inp=>{ if(!inp.min) inp.min=todayStr; });
+
 });

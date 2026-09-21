@@ -67,6 +67,9 @@ export default async function handler(req, res) {
       const sent = await sendGuideEmail(name, email);
 
       if (db) {
+        try {
+          await db.execute(`CREATE TABLE IF NOT EXISTS guide_signups (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, guide_sent INTEGER, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
+        } catch {}
         await db.execute({
           sql: 'INSERT INTO guide_signups (name, email, guide_sent) VALUES (?, ?, ?)',
           args: [name, email, sent ? 1 : 0],
@@ -75,6 +78,45 @@ export default async function handler(req, res) {
 
       res.writeHead(200, { ...corsHeaders, 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({ sent, name }));
+    }
+
+    // POST /api/contact
+    if (path === '/api/contact' && req.method === 'POST') {
+      const body = await readBody(req);
+      const params = new URLSearchParams(body);
+      const name = params.get('name');
+      const email = params.get('email');
+      const phone = params.get('phone');
+      const roomType = params.get('roomType');
+      const checkin = params.get('checkin');
+      const checkout = params.get('checkout');
+      const guests = params.get('guests');
+      const message = params.get('message');
+      if (!name || !email) {
+        res.writeHead(400, { ...corsHeaders, 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ sent: false, error: 'Name and email required' }));
+      }
+      const html = `<p><strong>Contact enquiry</strong></p>
+        <p>Name: ${name}<br>Email: ${email}<br>Phone: ${phone}<br>Room: ${roomType}<br>Check-in: ${checkin}<br>Check-out: ${checkout}<br>Guests: ${guests}<br>Message: ${message}</p>`;
+      const sent = await sendGuideEmail(name, email, html);
+      // also notify hotel inbox if RESEND_TO set
+      const notifyTo = process.env.RESEND_TO || process.env.CONTACT_TO || 'havenandamanreservation@gmail.com';
+      if (notifyTo && notifyTo !== email) {
+        await sendGuideEmail(`Hotel Haven`, notifyTo, `<p>New contact from ${name} (${email})</p>` + html);
+      }
+      if (db) {
+        try {
+          await db.execute(`CREATE TABLE IF NOT EXISTS contacts (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, phone TEXT, room_type TEXT, checkin TEXT, checkout TEXT, guests TEXT, message TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`);
+        } catch {}
+        try {
+          await db.execute({
+            sql: 'INSERT INTO contacts (name, email, phone, room_type, checkin, checkout, guests, message) VALUES (?,?,?,?,?,?,?,?)',
+            args: [name, email, phone, roomType, checkin, checkout, guests, message],
+          });
+        } catch (e) { console.warn('contacts insert failed', e.message); }
+      }
+      res.writeHead(200, { ...corsHeaders, 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ sent }));
     }
 
     // POST /api/booking
@@ -199,28 +241,41 @@ async function sendGuideEmail(name, email, htmlContent) {
   }
 
   const html = htmlContent || buildFreebieHtml(name);
+  const siteUrl = (process.env.SITE_URL || 'https://www.hotelhavenandaman.com').replace(/\/$/, '');
+  const from = process.env.RESEND_FROM || 'Hotel Haven <onboarding@resend.dev>';
+
+  // Fetch PDF and encode as base64 for Resend (path as URL not supported in serverless)
+  let attachments;
+  try {
+    const pdfRes = await fetch(`${siteUrl}/island-guide-2026.pdf`);
+    if (pdfRes.ok) {
+      const buf = Buffer.from(await pdfRes.arrayBuffer());
+      attachments = [{ filename: 'Island_Guide_2026.pdf', content: buf.toString('base64') }];
+    }
+  } catch (e) {
+    console.warn('PDF fetch failed, sending without attachment', e.message);
+  }
 
   try {
+    const payload = {
+      from,
+      to: email,
+      subject: `Welcome to Hotel Haven, ${name}! — Your Island Guide`,
+      html,
+      ...(attachments ? { attachments } : {}),
+    };
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from: process.env.RESEND_FROM || 'Hotel Haven <haven@yourdomain.com>',
-        to: email,
-        subject: `Welcome to Hotel Haven, ${name}! — Your Island Guide`,
-        html,
-        attachments: [
-          {
-            filename: 'Island_Guide_2026.pdf',
-            path: `${process.env.SITE_URL || 'https://yourdomain.com'}/island-guide-2026.pdf`,
-          },
-        ],
-      }),
+      body: JSON.stringify(payload),
     });
-
+    if (!res.ok) {
+      const txt = await res.text();
+      console.error('Resend API error', res.status, txt);
+    }
     return res.ok;
   } catch (err) {
     console.error('Resend error:', err);
