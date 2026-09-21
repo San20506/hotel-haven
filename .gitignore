@@ -7,4 +7,8 @@ __pycache__/
 *.pyc
 node_modules/
 .vercel/
-
+.agents/
+agent/
+.claude/skills/
+.claude/agents/
+.codex/skills/
