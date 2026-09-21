@@ -4,7 +4,7 @@
 The current site has SEO improvements but still presents the original visual treatment. A guest should immediately perceive Hotel Haven as a calm, credible Andaman stay rather than a generic template.
 
 ## What Changes
-- Replace the current bright multi-accent system with a restrained coastal palette.
+- Keep the existing orange/blue/cyan/amber palette exactly; redesign composition, spacing, typography, surfaces, and component treatment around it.
 - Improve type hierarchy, spacing rhythm, navigation clarity, buttons, cards, forms, and section transitions.
 - Make the homepage hero more premium and photography-led without changing its factual content.
 - Make room and amenity cards easier to scan and compare.
