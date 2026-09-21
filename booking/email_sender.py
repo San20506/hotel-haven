@@ -9,13 +9,27 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.send']
-TOKEN_PATH = os.path.expanduser("/mnt/Shared/hermes-home/profiles/friday/google_token.json")
+# Allow override via env var for portability (Vercel, local dev, shared mount)
+TOKEN_PATH = os.getenv("GMAIL_TOKEN_PATH") or os.getenv("GOOGLE_TOKEN_PATH") or os.path.join(os.path.dirname(__file__), "gmail_token.json")
+# Fallback to legacy shared path if env not set and file exists
+if not os.path.isfile(TOKEN_PATH):
+    legacy = os.path.expanduser("/mnt/Shared/hermes-home/profiles/friday/google_token.json")
+    if os.path.isfile(legacy):
+        TOKEN_PATH = legacy
+    else:
+        # also check ~/.config/hotel-haven/
+        alt = os.path.expanduser("~/.config/hotel-haven/gmail_token.json")
+        if os.path.isfile(alt):
+            TOKEN_PATH = alt
 GUIDE_PDF = os.path.join(os.path.dirname(__file__), "island-guide-2026.pdf")
 
 
 def send_guide(guest_email, guest_name, html_content, pdf_path=None):
     """Send the welcome guide to a guest. Optionally attach a PDF.
     Returns True on success."""
+    if not os.path.isfile(TOKEN_PATH):
+        print(f"Email send skipped: token not found at {TOKEN_PATH} (set GMAIL_TOKEN_PATH)")
+        return False
     try:
         creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
         if not creds.valid:

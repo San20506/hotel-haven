@@ -201,6 +201,42 @@ def send_freebie_guide(
     return {"sent": sent, "name": name}
 
 
+@app.post("/api/contact")
+def contact_enquiry(
+    name: str = Form(...),
+    email: str = Form(...),
+    phone: str = Form(None),
+    roomType: str = Form(None),
+    checkin: str = Form(None),
+    checkout: str = Form(None),
+    guests: str = Form(None),
+    message: str = Form(None),
+):
+    from database import get_conn
+    html = f"""<p><strong>Contact enquiry</strong></p>
+      <p>Name: {name}<br>Email: {email}<br>Phone: {phone}<br>Room: {roomType}<br>Check-in: {checkin}<br>Check-out: {checkout}<br>Guests: {guests}<br>Message: {message}</p>"""
+    # send to guest as confirmation + to hotel
+    guest_sent = send_guide(email, name, f"<p>Thanks {name}, we received your enquiry. We'll reply shortly.</p>" + html)
+    hotel_to = os.getenv("CONTACT_TO") or "havenandamanreservation@gmail.com"
+    try:
+        if hotel_to and hotel_to != email:
+            send_guide(hotel_to, "Hotel Haven", f"<p>New contact from {name} ({email})</p>" + html)
+    except Exception as e:
+        print(f"Hotel notify failed: {e}")
+    # store
+    try:
+        conn = get_conn()
+        conn.execute(
+            "INSERT INTO contacts (name, email, phone, room_type, checkin, checkout, guests, message) VALUES (?,?,?,?,?,?,?,?)",
+            (name, email, phone, roomType, checkin, checkout, guests, message),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"contacts insert failed: {e}")
+    return {"sent": guest_sent}
+
+
 @app.post("/api/booking")
 def add_booking(
     guest_name: str = Form(...),

@@ -214,6 +214,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Contact form -> /api/contact (completes email pipeline)
+  const contactForm=document.getElementById('contactForm');
+  if(contactForm){
+    contactForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const btn=contactForm.querySelector('button[type="submit"]');
+      const orig=btn?btn.textContent:'Send Enquiry';
+      if(btn){ btn.textContent='Sending…'; btn.disabled=true; btn.setAttribute('data-state','loading'); }
+      try{
+        const fd=new FormData(contactForm);
+        // ensure field names match server: name,email,phone,roomType,checkin,checkout,guests,message
+        const res=await fetch('/api/contact',{method:'POST', body:fd});
+        const data=await res.json();
+        if(!res.ok || !data.sent) throw new Error('not sent');
+        if(btn){ btn.setAttribute('data-state','success'); btn.textContent='Sent ✓'; }
+        const toast=document.createElement('div');
+        toast.textContent='Thanks! We received your enquiry — check your email.';
+        Object.assign(toast.style,{position:'fixed',bottom:'18px',left:'50%',transform:'translateX(-50%) translateY(8px)',background:'#0F1F23',color:'white',padding:'12px 16px',borderRadius:'999px',fontSize:'0.88rem',boxShadow:'0 12px 32px rgba(15,31,35,0.22)',zIndex:'9999',opacity:'0',transition:'all 320ms cubic-bezier(0.22,1,0.36,1)'});
+        document.body.appendChild(toast);
+        requestAnimationFrame(()=>{ toast.style.opacity='1'; toast.style.transform='translateX(-50%) translateY(0)'; });
+        setTimeout(()=>{ toast.style.opacity='0'; setTimeout(()=>toast.remove(),320); }, 4000);
+        contactForm.reset();
+        setTimeout(()=>{ if(btn){ btn.textContent=orig; btn.disabled=false; btn.removeAttribute('data-state'); }}, 2000);
+      }catch{
+        if(btn){ btn.setAttribute('data-state','error'); btn.textContent='Try again'; setTimeout(()=>{ btn.textContent=orig; btn.disabled=false; btn.removeAttribute('data-state'); }, 2200); }
+      }
+    });
+  }
+
   // 7. Booking calculator
   const bookingForm=document.querySelector('.widget-booking-form');
   if(bookingForm){
