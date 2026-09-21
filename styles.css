@@ -129,7 +129,7 @@ p{max-width:68ch}
 .navbar.scrolled{top:10px;background:rgba(255,255,255,0.96);box-shadow:0 12px 32px rgba(15,31,35,0.12);border-color:rgba(15,31,35,0.06)}
 .navbar .container{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:none;padding:0}
 .navbar .logo{display:inline-flex;align-items:center;gap:0.65rem;flex:0 0 auto}
-.navbar .logo img{height:2rem;width:auto;object-fit:contain}
+.navbar .logo img{height:2rem;width:2rem;object-fit:cover;border-radius:50%;overflow:hidden;aspect-ratio:1/1;box-shadow:0 1px 6px rgba(15,31,35,0.08);background:var(--color-paper-2)}
 .navbar .logo-mark{width:36px;height:36px;border-radius:var(--radius-full);background:var(--color-ink);color:white;display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:0.95rem;letter-spacing:-0.04em}
 .nav-links,.nav-menu{display:flex;align-items:center;gap:0.15rem;list-style:none;padding-left:0}
 .nav-links a,.nav-menu .nav-link{position:relative;display:inline-flex;align-items:center;min-height:2.35rem;padding:0 0.9rem;border-radius:var(--radius-full);color:var(--color-ink);font-family:var(--font-body);font-size:0.88rem;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;transition:all var(--transition)}
@@ -278,8 +278,9 @@ p{max-width:68ch}
 .blog-column{display:flex;flex-direction:column;gap:1.1rem}
 .blog-mini-card{display:flex;gap:1rem;padding:1rem;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-paper);transition:all var(--transition)}
 .blog-mini-card:hover{background:white;border-color:var(--color-border-strong);transform:translateY(-2px);box-shadow:var(--shadow-xs)}
+.blog-mini-card:hover .blog-thumb img,.blog-mini-card:focus-within .blog-thumb img{filter:grayscale(0) saturate(1) contrast(1) brightness(1);transform:scale(1.06)}
 .blog-thumb{width:84px;height:84px;flex:0 0 auto;border-radius:var(--radius-sm);background:var(--color-paper-2);overflow:hidden;position:relative}
-.blog-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.blog-thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) saturate(0) contrast(1.05) brightness(1.02);transition:filter 480ms var(--ease-out),transform 600ms var(--ease-out)}
 .blog-thumb svg{width:1.6rem;height:1.6rem}
 .blog-details{display:flex;flex-direction:column;justify-content:center;gap:0.2rem}
 .blog-date{color:var(--color-accent);font-family:var(--font-mono);font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase}
