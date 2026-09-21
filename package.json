@@ -12,7 +12,8 @@
     "url": "git+https://github.com/San20506/hotel-haven.git"
   },
   "dependencies": {
-    "@libsql/client": "^0.17.4"
+    "@libsql/client": "^0.17.4",
+    "@vercel/speed-insights": "^2.0.0"
   },
   "devDependencies": {
     "vercel": "^56.2.1"
